@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "intakeDate": "2025-03-22",
+    "totalCalories": 1800,
+    "totalProtein": 90,
+    "totalFat": 40,
+    "totalCarbs": 200,
+    "totalFiber": 20
+  },
+  {
+    "id": 2,
+    "userId": 2,
+    "intakeDate": "2025-03-22",
+    "totalCalories": 1600,
+    "totalProtein": 75,
+    "totalFat": 35,
+    "totalCarbs": 180,
+    "totalFiber": 18
+  }
+]

@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/users.entity';
-import { DailyIntake } from './entities/dailyIntake.entity';
-import { Food } from './entities/foods.entity';
-import { GoalTracking } from './entities/goalTracking.entity';
-import { MealItem } from './entities/mealItems.entity';
-import { Meal } from './entities/meals.entity';
-
+import {
+  User,
+  DailyIntake,
+  Food,
+  GoalTracking,
+  Meal,
+  MealItem,
+} from 'src/database/entities';
 @Module({
   imports: [
     TypeOrmModule.forRoot({

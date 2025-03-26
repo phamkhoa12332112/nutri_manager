@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "mealId": 1,
+    "foodId": 1,
+    "quantity": 150
+  },
+  {
+    "id": 2,
+    "mealId": 1,
+    "foodId": 2,
+    "quantity": 1
+  },
+  {
+    "id": 3,
+    "mealId": 2,
+    "foodId": 3,
+    "quantity": 1
+  }
+]

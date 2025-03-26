@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Cơm trắng (100g)",
+    "calories": 130,
+    "protein": 2.7,
+    "fat": 0.3,
+    "carbs": 28,
+    "fiber": 0.4
+  },
+  {
+    "id": 2,
+    "name": "Phở bò (1 tô ~ 480g)",
+    "calories": 450,
+    "protein": 30,
+    "fat": 10,
+    "carbs": 60,
+    "fiber": 3
+  },
+  {
+    "id": 3,
+    "name": "Bánh mì thịt (1 ổ ~ 250g)",
+    "calories": 420,
+    "protein": 15,
+    "fat": 18,
+    "carbs": 50,
+    "fiber": 3
+  }
+]

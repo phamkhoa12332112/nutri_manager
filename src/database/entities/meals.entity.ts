@@ -16,6 +16,9 @@ export class Meal {
   @Column({ type: 'varchar' })
   name: string;
 
+  @Column({ type: 'varchar' })
+  mealTime: string;
+
   @ManyToOne(() => User, (user) => user.meals)
   user: User;
 

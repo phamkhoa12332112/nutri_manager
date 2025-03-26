@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "intakeDate": "2025-03-22",
+    "dailyCaloriesGoal": 2000,
+    "totalCalories": 1800,
+    "goalStatus": "on track"
+  },
+  {
+    "id": 2,
+    "userId": 2,
+    "intakeDate": "2025-03-22",
+    "dailyCaloriesGoal": 1800,
+    "totalCalories": 1600,
+    "goalStatus": "on track"
+  }
+]

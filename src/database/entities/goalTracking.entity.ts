@@ -15,8 +15,8 @@ export class GoalTracking {
   @Column({ type: 'double' })
   totalCalories: number;
 
-  @Column({ type: 'bit' })
-  goalStatus: boolean;
+  @Column({ type: 'varchar' })
+  goalStatus: string;
 
   @ManyToOne(() => User, (user) => user.goalTrackings)
   user: User;
