@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   User,
   DailyIntake,
-  Food,
+  Ingredient,
   GoalTracking,
   Meal,
   MealItem,
@@ -15,7 +15,7 @@ import { MocksController } from './mocks.controller';
   imports: [
     TypeOrmModule.forFeature([
       User,
-      Food,
+      Ingredient,
       DailyIntake,
       GoalTracking,
       MealItem,

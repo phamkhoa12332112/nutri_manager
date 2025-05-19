@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { MocksModule } from './mocks/mocks.module';
+import { UsersModule } from './users/users.module';
 @Module({
-  imports: [DatabaseModule, MocksModule],
+  imports: [DatabaseModule, MocksModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

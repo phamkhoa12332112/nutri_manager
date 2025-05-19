@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Meal } from './meals.entity';
 import { GoalTracking } from './goalTracking.entity';
 import { DailyIntake } from './dailyIntake.entity';
+import { Moods } from './moods.entity';
 
 @Entity('users')
 export class User {
@@ -34,4 +35,7 @@ export class User {
 
   @OneToMany(() => GoalTracking, (goalTracking) => goalTracking.user)
   goalTrackings: GoalTracking[];
+
+  @OneToMany(() => Moods, (mood) => mood.user)
+  moods: Moods[];
 }

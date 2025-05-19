@@ -2,19 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import * as users from './sample/users.sample.json';
 import * as foods from './sample/foods.sample.json';
-import * as meals from './sample/meals.sample.json';
-import * as mealItems from './sample/mealItems.sample.json';
 import * as dailyIntakes from './sample/dailyIntakes.sample.json';
 import * as goalTrackings from './sample/goalTrackings.sample.json';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   User,
   DailyIntake,
-  Food,
+  Ingredient,
   GoalTracking,
   Meal,
   MealItem,
@@ -25,7 +23,8 @@ import { Repository } from 'typeorm';
 export class MocksService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Food) private foodRepository: Repository<Food>,
+    @InjectRepository(Ingredient)
+    private IngredientRepository: Repository<Ingredient>,
     @InjectRepository(Meal) private mealRepository: Repository<Meal>,
     @InjectRepository(MealItem)
     private mealItemRepository: Repository<MealItem>,
@@ -51,55 +50,18 @@ export class MocksService {
   }
 
   async mockFoods() {
-    const mockFoods: Food[] = [];
+    const mockFoods: Ingredient[] = [];
     for (const food of foods) {
-      const isExistingFood = await this.foodRepository.findOneBy({
+      const isExistingFood = await this.IngredientRepository.findOneBy({
         id: food.id,
       });
       if (isExistingFood) {
         continue;
       }
-      const mockFood = this.foodRepository.create(food);
+      const mockFood = this.IngredientRepository.create(food);
       mockFoods.push(mockFood);
     }
-    return this.foodRepository.save(mockFoods);
-  }
-
-  async mockMeals() {
-    const mockMeals: Meal[] = [];
-    for (const meal of meals) {
-      const isExistingMeal = await this.mealRepository.findOneBy({
-        id: meal.id,
-      });
-      if (isExistingMeal) {
-        continue;
-      }
-      const mockMeal = this.mealRepository.create({
-        user: { id: meal.userId },
-        ...meal,
-      });
-      mockMeals.push(mockMeal);
-    }
-    return this.mealRepository.save(mockMeals);
-  }
-
-  async mockMealItems() {
-    const mockMealItems: MealItem[] = [];
-    for (const mealItem of mealItems) {
-      const isExistingMealItem = await this.mealItemRepository.findOneBy({
-        id: mealItem.id,
-      });
-      if (isExistingMealItem) {
-        continue;
-      }
-      const mockMealItem = this.mealItemRepository.create({
-        meal: { id: mealItem.mealId },
-        food: { id: mealItem.foodId },
-        ...mealItem,
-      });
-      mockMealItems.push(mockMealItem);
-    }
-    return this.mealItemRepository.save(mockMealItems);
+    return this.IngredientRepository.save(mockFoods);
   }
 
   async mockDailyIntakes() {
@@ -143,8 +105,6 @@ export class MocksService {
     try {
       await this.mockUser();
       await this.mockFoods();
-      await this.mockMeals();
-      await this.mockMealItems();
       await this.mockDailyIntakes();
       await this.mockGoalTrackings();
       return { msg: 'Mock data has been created' };
