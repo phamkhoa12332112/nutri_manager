@@ -34,6 +34,10 @@ export class UpdateUserDto {
   @IsOptional()
   dailyCaloriesGoal?: number;
 
+  @IsNumber()
+  @IsOptional()
+  levelExercise?: number;
+
   @IsString()
   @MinLength(3)
   userId: string;
