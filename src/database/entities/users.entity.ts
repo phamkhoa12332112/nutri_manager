@@ -24,6 +24,12 @@ export class User {
   @Column({ type: 'double' })
   height: number;
 
+  @Column({ type: 'varchar' })
+  email: string;
+
+  @Column({ type: 'varchar' })
+  userId: string;
+
   @Column({ type: 'double' })
   dailyCaloriesGoal: number;
 

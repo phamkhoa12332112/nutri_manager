@@ -33,7 +33,7 @@ import {
         MoodRecommendItems,
         Moods,
       ],
-      synchronize: true,
+      // synchronize: true,
     }),
   ],
 })

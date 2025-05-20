@@ -26,4 +26,12 @@ export class CreateUserDto {
 
   @IsNumber()
   dailyCaloriesGoal: number;
+
+  @IsString()
+  @MinLength(3)
+  email: string;
+
+  @IsString()
+  @MinLength(3)
+  userId: string;
 }
