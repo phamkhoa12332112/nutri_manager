@@ -3,10 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   User,
   DailyIntake,
-  Food,
   GoalTracking,
   Meal,
   MealItem,
+  Ingredient,
+  RecipeItems,
+  Recipes,
+  MoodRecommendItems,
+  Moods,
 } from 'src/database/entities';
 @Module({
   imports: [
@@ -17,8 +21,19 @@ import {
       username: 'root',
       password: '',
       database: 'health',
-      entities: [User, Meal, MealItem, GoalTracking, DailyIntake, Food],
-      synchronize: true,
+      entities: [
+        User,
+        Meal,
+        MealItem,
+        GoalTracking,
+        DailyIntake,
+        Ingredient,
+        RecipeItems,
+        Recipes,
+        MoodRecommendItems,
+        Moods,
+      ],
+      // synchronize: true,
     }),
   ],
 })
