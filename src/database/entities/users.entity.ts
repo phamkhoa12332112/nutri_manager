@@ -33,6 +33,9 @@ export class User {
   @Column({ type: 'double' })
   dailyCaloriesGoal: number;
 
+  @Column({ type: 'double' })
+  levelExercise: number;
+
   @OneToMany(() => Meal, (meal) => meal.user)
   meals: Meal[];
 

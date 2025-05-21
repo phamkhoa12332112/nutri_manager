@@ -1,7 +1,8 @@
 import { CreateUserDto } from './dto/req/CreateUser.dto';
 import { LoginUserDto } from './dto/req/LoginUserDto.dto';
+import { UpdateUserDto } from './dto/req/UpdateUserDto.dto';
 import { UsersService } from './users.service';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Patch, Post } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -15,5 +16,10 @@ export class UsersController {
   @Post('/login')
   login(@Body() loginUser: LoginUserDto) {
     return this.usersService.login(loginUser);
+  }
+
+  @Patch('/update')
+  update(@Body() updateUser: UpdateUserDto) {
+    return this.usersService.update(updateUser);
   }
 }
