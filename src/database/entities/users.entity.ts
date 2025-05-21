@@ -12,16 +12,16 @@ export class User {
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', nullable: true })
   age: number;
 
-  @Column({ type: 'bit' })
+  @Column({ type: 'bit', nullable: true })
   gender: boolean;
 
-  @Column({ type: 'double' })
+  @Column({ type: 'double', nullable: true })
   weight: number;
 
-  @Column({ type: 'double' })
+  @Column({ type: 'double', nullable: true })
   height: number;
 
   @Column({ type: 'varchar' })
@@ -30,10 +30,10 @@ export class User {
   @Column({ type: 'varchar' })
   userId: string;
 
-  @Column({ type: 'double' })
+  @Column({ type: 'double', nullable: true })
   dailyCaloriesGoal: number;
 
-  @Column({ type: 'double' })
+  @Column({ type: 'double', nullable: true })
   levelExercise: number;
 
   @OneToMany(() => Meal, (meal) => meal.user)
