@@ -28,6 +28,10 @@ export class UpdateUserDto {
 
   @IsNumber()
   @IsOptional()
+  weightGoal?: number;
+
+  @IsNumber()
+  @IsOptional()
   height?: number;
 
   @IsNumber()

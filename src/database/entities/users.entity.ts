@@ -22,6 +22,9 @@ export class User {
   weight: number;
 
   @Column({ type: 'double', nullable: true })
+  weightGoal: number;
+
+  @Column({ type: 'double', nullable: true })
   height: number;
 
   @Column({ type: 'varchar' })
