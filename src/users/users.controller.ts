@@ -2,7 +2,7 @@ import { CreateUserDto } from './dto/req/CreateUser.dto';
 import { LoginUserDto } from './dto/req/LoginUserDto.dto';
 import { UpdateUserDto } from './dto/req/UpdateUserDto.dto';
 import { UsersService } from './users.service';
-import { Body, Controller, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -21,5 +21,10 @@ export class UsersController {
   @Patch('/update')
   update(@Body() updateUser: UpdateUserDto) {
     return this.usersService.update(updateUser);
+  }
+
+  @Get('/me/:userId')
+  getMe(@Param('userId') userId: string) {
+    return this.usersService.getUser(userId);
   }
 }
