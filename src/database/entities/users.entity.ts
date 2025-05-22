@@ -15,7 +15,7 @@ export class User {
   @Column({ type: 'integer', nullable: true })
   age: number;
 
-  @Column({ type: 'bit', nullable: true })
+  @Column({ type: 'bool', nullable: true })
   gender: boolean;
 
   @Column({ type: 'double', nullable: true })
