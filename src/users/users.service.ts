@@ -52,4 +52,12 @@ export class UsersService {
       data: rs,
     };
   }
+
+  async getUser(userId: string) {
+    const user = await this.userRepository.findOneBy({ userId: userId });
+    if (!user) {
+      throw new BadRequestException('User not found!');
+    }
+    return user;
+  }
 }
