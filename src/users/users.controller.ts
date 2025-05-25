@@ -8,9 +8,9 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Post()
+  @Post('/register')
   create(@Body() newUser: CreateUserDto) {
-    return this.usersService.createUser(newUser);
+    return this.usersService.register(newUser);
   }
 
   @Post('/login')

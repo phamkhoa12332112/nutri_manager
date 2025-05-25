@@ -12,13 +12,13 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async createUser(newUser: CreateUserDto) {
-    const isEmailExist = await this.userRepository.findOneBy({
-      email: newUser.email,
+  async register(newUser: CreateUserDto) {
+    const isUserExist = await this.userRepository.findOne({
+      where: [{ email: newUser.email }, { userId: newUser.userId }],
     });
 
-    if (isEmailExist) {
-      throw new BadRequestException('Name is already existing!');
+    if (isUserExist) {
+      throw new BadRequestException('User is already existing!');
     }
 
     const user = this.userRepository.create(newUser);
