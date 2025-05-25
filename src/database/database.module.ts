@@ -21,6 +21,7 @@ import {
       username: 'root',
       password: '',
       database: 'health',
+      logging: true,
       entities: [
         User,
         Meal,
