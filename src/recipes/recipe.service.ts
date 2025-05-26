@@ -9,8 +9,8 @@ export class RecipeService {
     @InjectRepository(Recipes) private recipeRepository: Repository<Recipes>,
   ) {}
 
-  getById(id: number) {
-    const recipe = this.recipeRepository.findOne({ where: { id } });
+  async getById(id: number) {
+    const recipe = await this.recipeRepository.findOne({ where: { id } });
     return { msg: 'Get recipe successfully', stateCode: 200, data: recipe };
   }
 }
