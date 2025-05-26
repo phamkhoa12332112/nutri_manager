@@ -8,6 +8,7 @@ import { Recipes } from './recipes.entity';
 import { RecipeItems } from './recipeItems.entity';
 import { MoodRecommendItems } from './moodRecommendItems.entity';
 import { Moods } from './moods.entity';
+import { DetailMeals } from './detailMeal.entity';
 
 export {
   User,
@@ -20,4 +21,5 @@ export {
   RecipeItems,
   MoodRecommendItems,
   Moods,
+  DetailMeals,
 };

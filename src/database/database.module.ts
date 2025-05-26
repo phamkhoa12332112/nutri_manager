@@ -11,6 +11,7 @@ import {
   Recipes,
   MoodRecommendItems,
   Moods,
+  DetailMeals,
 } from 'src/database/entities';
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import {
         Recipes,
         MoodRecommendItems,
         Moods,
+        DetailMeals,
       ],
       synchronize: true,
     }),
