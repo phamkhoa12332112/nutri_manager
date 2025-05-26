@@ -58,6 +58,34 @@ export class MealsService {
     return { msg: 'Create user meal successfully', stateCode: 200, data: rs };
   }
 
+  async deleteUserMeal(userId: number, detailId: number) {
+    const detailMeal = await this.detailMealRepository.findOne({
+      where: { id: detailId, user: { id: userId } },
+    });
+    if (!detailMeal) {
+      return {
+        msg: 'User does not have this meal',
+        stateCode: 400,
+        data: null,
+      };
+    }
+    const rs = await this.detailMealRepository.remove(detailMeal);
+    return { msg: 'Delete user meal successfully', stateCode: 200, data: rs };
+  }
+
+  async getUserMeals(userId: number, limit: number) {
+    const details = await this.detailMealRepository.find({
+      where: { user: { id: userId } },
+      relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
+      take: limit,
+    });
+    return {
+      msg: 'Get user meals successfully',
+      stateCode: 200,
+      data: details,
+    };
+  }
+
   async getMeals(limit: number) {
     const meals = await this.mealRepository.find();
     if (!meals || !meals.length)

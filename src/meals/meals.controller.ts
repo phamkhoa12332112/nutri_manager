@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -22,6 +23,22 @@ export class MealsController {
     return this.mealsService.createUserMeal(userId, detail);
   }
 
+  @Delete('/user/delete/:userId/:detailId')
+  delete(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('detailId', ParseIntPipe) detailId: number,
+  ) {
+    return this.mealsService.deleteUserMeal(userId, detailId);
+  }
+
+  @Get('/user/details/:userId')
+  getUserMeals(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query('limit', ParseIntPipe) limit: number = 10,
+  ) {
+    return this.mealsService.getUserMeals(userId, limit);
+  }
+
   @Get('/details/:mealId/:recipeId')
   getMealDetails(
     @Param('mealId') mealId: number,
@@ -31,7 +48,7 @@ export class MealsController {
   }
 
   @Get()
-  getMeals(@Query('limit') limit: number = 10) {
+  getMeals(@Query('limit', ParseIntPipe) limit: number = 10) {
     return this.mealsService.getMeals(limit);
   }
 }

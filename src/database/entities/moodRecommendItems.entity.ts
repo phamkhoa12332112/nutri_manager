@@ -3,7 +3,7 @@ import { Moods } from './moods.entity';
 import { Recipes } from './recipes.entity';
 import { Ingredient } from './ingredients.entity';
 
-@Entity('moodrecommenditems')
+@Entity('mood_recommend_items')
 export class MoodRecommendItems {
   @PrimaryGeneratedColumn()
   id: number;
