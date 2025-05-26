@@ -28,8 +28,8 @@ export class Ingredient {
   @Column({ type: 'double' })
   fiber: number;
 
-  @Column({ type: 'integer' })
-  unit: number;
+  @Column({ type: 'varchar' })
+  unit: string;
 
   @Column({ type: 'varchar' })
   imageUrl: string;
