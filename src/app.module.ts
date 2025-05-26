@@ -5,8 +5,15 @@ import { DatabaseModule } from './database/database.module';
 import { MocksModule } from './mocks/mocks.module';
 import { UsersModule } from './users/users.module';
 import { MealsModule } from './meals/meals.module';
+import { RecipeModule } from './recipes/recipe.module';
 @Module({
-  imports: [DatabaseModule, MocksModule, UsersModule, MealsModule],
+  imports: [
+    DatabaseModule,
+    MocksModule,
+    UsersModule,
+    MealsModule,
+    RecipeModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
