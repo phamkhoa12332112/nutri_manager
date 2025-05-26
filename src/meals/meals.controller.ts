@@ -1,9 +1,26 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { MealsService } from './meals.service';
+import { CreateUserMealDto } from './dto/req/createUserMeal.dto';
 
 @Controller('meals')
 export class MealsController {
   constructor(private mealsService: MealsService) {}
+
+  @Post('/user/create/:userId')
+  create(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() detail: CreateUserMealDto,
+  ) {
+    return this.mealsService.createUserMeal(userId, detail);
+  }
 
   @Get('/details/:mealId/:recipeId')
   getMealDetails(

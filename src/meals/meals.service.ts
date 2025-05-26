@@ -1,7 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Ingredient, Meal, MealItem, Recipes } from 'src/database/entities';
+import {
+  DetailMeals,
+  Ingredient,
+  Meal,
+  MealItem,
+  Recipes,
+} from 'src/database/entities';
 import { Repository } from 'typeorm';
+import { CreateUserMealDto } from './dto/req/createUserMeal.dto';
 
 @Injectable()
 export class MealsService {
@@ -12,7 +19,44 @@ export class MealsService {
     private mealItemRepository: Repository<MealItem>,
     @InjectRepository(Ingredient)
     private ingredientRepository: Repository<Ingredient>,
+    @InjectRepository(DetailMeals)
+    private detailMealRepository: Repository<DetailMeals>,
   ) {}
+
+  async createUserMeal(userId: number, detail: CreateUserMealDto) {
+    const mealItem = await this.mealItemRepository.findOne({
+      where: { meal: { id: detail.mealId }, recipe: { id: detail.recipeId } },
+    });
+    if (!mealItem) {
+      return {
+        msg: `No meal with id ${detail.mealId} & recipe id ${detail.recipeId}`,
+        stateCode: 400,
+        data: null,
+      };
+    }
+    const isExist = await this.detailMealRepository.findOne({
+      where: {
+        user: { id: userId },
+        mealItem: { id: mealItem.id },
+      },
+    });
+    if (isExist) {
+      return {
+        msg: 'User already has this meal',
+        stateCode: 400,
+        data: null,
+      };
+    }
+    const newDetailMeal = this.detailMealRepository.create({
+      mealTime: new Date(),
+      user: { id: userId },
+      mealItem: { id: mealItem.id },
+    });
+
+    const rs = await this.detailMealRepository.save(newDetailMeal);
+
+    return { msg: 'Create user meal successfully', stateCode: 200, data: rs };
+  }
 
   async getMeals(limit: number) {
     const meals = await this.mealRepository.find();

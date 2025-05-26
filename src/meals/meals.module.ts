@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
+  DetailMeals,
   Ingredient,
   Meal,
   MealItem,
@@ -18,6 +19,7 @@ import { MealsService } from './meals.service';
       MealItem,
       RecipeItems,
       Ingredient,
+      DetailMeals,
     ]),
   ],
   controllers: [MealsController],

@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
-import { User } from './users.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MealItem } from './mealItems.entity';
 
 @Entity('meals')
@@ -15,12 +8,6 @@ export class Meal {
 
   @Column({ type: 'varchar' })
   name: string;
-
-  @Column({ type: 'varchar' })
-  mealTime: string;
-
-  @ManyToOne(() => User, (user) => user.meals)
-  user: User;
 
   @OneToMany(() => MealItem, (mealItem) => mealItem.meal)
   items: MealItem[];
