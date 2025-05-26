@@ -34,7 +34,7 @@ export class MealsController {
   @Get('/user/details/:userId')
   getUserMeals(
     @Param('userId', ParseIntPipe) userId: number,
-    @Query('limit', ParseIntPipe) limit: number = 10,
+    @Query('limit') limit: number = 10,
   ) {
     return this.mealsService.getUserMeals(userId, limit);
   }
@@ -48,7 +48,7 @@ export class MealsController {
   }
 
   @Get()
-  getMeals(@Query('limit', ParseIntPipe) limit: number = 10) {
+  getMeals(@Query('limit') limit: number = 10) {
     return this.mealsService.getMeals(limit);
   }
 }
