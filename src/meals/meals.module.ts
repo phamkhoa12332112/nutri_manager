@@ -1,11 +1,25 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Meal, MealItem, Recipes } from 'src/database/entities';
+import {
+  Ingredient,
+  Meal,
+  MealItem,
+  RecipeItems,
+  Recipes,
+} from 'src/database/entities';
 import { MealsController } from './meals.controller';
 import { MealsService } from './meals.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Meal, Recipes, MealItem])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Meal,
+      Recipes,
+      MealItem,
+      RecipeItems,
+      Ingredient,
+    ]),
+  ],
   controllers: [MealsController],
   providers: [MealsService],
 })

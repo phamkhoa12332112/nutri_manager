@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Meal, Recipes } from 'src/database/entities';
+import { Ingredient, Meal, MealItem, Recipes } from 'src/database/entities';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -8,6 +8,10 @@ export class MealsService {
   constructor(
     @InjectRepository(Meal) private mealRepository: Repository<Meal>,
     @InjectRepository(Recipes) private recipeRepository: Repository<Recipes>,
+    @InjectRepository(MealItem)
+    private mealItemRepository: Repository<MealItem>,
+    @InjectRepository(Ingredient)
+    private ingredientRepository: Repository<Ingredient>,
   ) {}
 
   async getMeals(limit: number) {
@@ -30,5 +34,21 @@ export class MealsService {
       rs.push({ meal, recipe });
     }
     return { msg: 'Get meals successfully', stateCode: 200, data: rs };
+  }
+
+  async getMealDetails(mealId: number, recipeId: number) {
+    const mealRecipe = await this.mealItemRepository.findOne({
+      where: { meal: { id: mealId }, recipe: { id: recipeId } },
+      relations: ['meal', 'recipe'],
+    });
+
+    const ingredients = await this.ingredientRepository.find({
+      where: { recipeItems: { recipe: { id: recipeId } } },
+    });
+    return {
+      msg: 'Get meal details successfully',
+      stateCode: 200,
+      data: { mealRecipe, ingredients },
+    };
   }
 }
