@@ -116,6 +116,7 @@ export class MealsService {
 
     const ingredients = await this.ingredientRepository.find({
       where: { recipeItems: { recipe: { id: recipeId } } },
+      relations: ['recipeItems'],
     });
     return {
       msg: 'Get meal details successfully',
