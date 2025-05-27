@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from './users.entity';
 import { MealItem } from './mealItems.entity';
 
@@ -20,7 +13,6 @@ export class DetailMeals {
   @ManyToOne(() => User, (user) => user.meals)
   user: User;
 
-  @OneToOne(() => MealItem)
-  @JoinColumn()
+  @ManyToOne(() => MealItem, (mealItem) => mealItem.detailMeals)
   mealItem: MealItem;
 }
