@@ -29,6 +29,7 @@ export class MoodsService {
     for (const recipe of recipes) {
       const ingredients = await this.ingredientRepository.find({
         where: { recipeItems: { recipe: { id: recipe.id } } },
+        relations: ['recipeItems'],
       });
       rs.push({ recipe, ingredients });
     }
