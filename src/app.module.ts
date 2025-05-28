@@ -6,6 +6,7 @@ import { MocksModule } from './mocks/mocks.module';
 import { UsersModule } from './users/users.module';
 import { MealsModule } from './meals/meals.module';
 import { RecipeModule } from './recipes/recipe.module';
+import { MoodsModule } from './moods/moods.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -13,6 +14,7 @@ import { RecipeModule } from './recipes/recipe.module';
     UsersModule,
     MealsModule,
     RecipeModule,
+    MoodsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

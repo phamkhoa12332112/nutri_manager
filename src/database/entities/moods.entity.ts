@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './users.entity';
 import { MoodRecommendItems } from './moodRecommendItems.entity';
 
 @Entity('moods')
@@ -15,9 +14,6 @@ export class Moods {
 
   @Column({ type: 'timestamp' })
   recordedAt: Date;
-
-  @ManyToOne(() => User, (user) => user.goalTrackings)
-  user: User;
 
   @ManyToOne(
     () => MoodRecommendItems,
