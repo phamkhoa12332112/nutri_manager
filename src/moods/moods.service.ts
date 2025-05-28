@@ -21,7 +21,7 @@ export class MoodsService {
     const recipes = await this.recipeRepository.find({
       where: { moodRecommendItems: { mood: { id: moodId } } },
       take: limit,
-      relations: ['moodRecommendItems'],
+      relations: ['moodRecommendItems', 'moodRecommendItems.meal'],
     });
     if (!recipes || !recipes.length) {
       return { statusCode: 200, data: [], msg: 'no recipes found' };
