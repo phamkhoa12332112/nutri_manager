@@ -114,10 +114,19 @@ export class MealsService {
       relations: ['meal', 'recipe'],
     });
 
+    if (!mealRecipe) {
+      return {
+        msg: `No meal with id ${mealId} & recipe id ${recipeId}`,
+        stateCode: 400,
+        data: null,
+      };
+    }
+
     const ingredients = await this.ingredientRepository.find({
       where: { recipeItems: { recipe: { id: recipeId } } },
       relations: ['recipeItems'],
     });
+
     return {
       msg: 'Get meal details successfully',
       stateCode: 200,
