@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { RecipeItems } from './recipeItems.entity';
-import { MoodRecommendItems } from './moodRecommendItems.entity';
 
 @Entity('ingredients')
 export class Ingredient {
@@ -36,10 +35,4 @@ export class Ingredient {
 
   @OneToMany(() => RecipeItems, (recipeItems) => recipeItems.ingredient)
   recipeItems: RecipeItems[];
-
-  @OneToMany(
-    () => MoodRecommendItems,
-    (moodRecommendItem) => moodRecommendItem.ingredient,
-  )
-  moodRecommendItems: MoodRecommendItems[];
 }
