@@ -133,4 +133,13 @@ export class MealsService {
       data: { mealRecipe, ingredients },
     };
   }
+
+  async getIngredients() {
+    const ingredients = await this.ingredientRepository.find();
+    return {
+      msg: 'Get ingredients successfully',
+      stateCode: 200,
+      data: ingredients,
+    };
+  }
 }

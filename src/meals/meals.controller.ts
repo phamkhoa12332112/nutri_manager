@@ -47,6 +47,11 @@ export class MealsController {
     return this.mealsService.getMealDetails(mealId, recipeId);
   }
 
+  @Get('/ingredients')
+  getIngredients() {
+    return this.mealsService.getIngredients();
+  }
+
   @Get()
   getMeals(@Query('limit') limit: number = 10) {
     return this.mealsService.getMeals(limit);
