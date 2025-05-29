@@ -60,4 +60,9 @@ export class UsersService {
     }
     return user;
   }
+
+  async getAll() {
+    const users = await this.userRepository.find();
+    return { msg: 'Get all users successfully', stateCode: 200, data: users };
+  }
 }

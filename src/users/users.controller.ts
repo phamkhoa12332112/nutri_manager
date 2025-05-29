@@ -27,4 +27,9 @@ export class UsersController {
   getMe(@Param('userId') userId: string) {
     return this.usersService.getUser(userId);
   }
+
+  @Get('/all')
+  getAll() {
+    return this.usersService.getAll();
+  }
 }
