@@ -13,4 +13,13 @@ export class RecipeService {
     const recipe = await this.recipeRepository.findOne({ where: { id } });
     return { msg: 'Get recipe successfully', stateCode: 200, data: recipe };
   }
+
+  async getAll() {
+    const recipes = await this.recipeRepository.find();
+    return {
+      msg: 'Get all recipes successfully',
+      stateCode: 200,
+      data: recipes,
+    };
+  }
 }

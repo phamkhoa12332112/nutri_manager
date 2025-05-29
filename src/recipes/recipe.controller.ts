@@ -9,4 +9,9 @@ export class RecipeController {
   getRecipe(@Param('id') id: number) {
     return this.recipeService.getById(id);
   }
+
+  @Get()
+  getAllRecipes() {
+    return this.recipeService.getAll();
+  }
 }
