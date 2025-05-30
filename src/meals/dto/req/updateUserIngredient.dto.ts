@@ -23,7 +23,7 @@ export class UpdateUserIngredientDto {
 
   @IsOptional()
   @IsNumber()
-  unit: string;
+  quantity: number;
 
   @IsNotEmpty()
   @IsNumber()

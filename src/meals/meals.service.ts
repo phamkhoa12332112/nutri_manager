@@ -229,7 +229,7 @@ export class MealsService {
         COALESCE(${userId ? 'tci.carbs' : 'NULL'}, i.carbs) as carbs,
         COALESCE(${userId ? 'tci.fiber' : 'NULL'}, i.fiber) as fiber,
         ri.id as rid,
-        ri.quantity as rQuantity`,
+        COALESCE(${userId ? 'tci.quantity' : 'NULL'}, ri.quantity) as rQuantity`,
       )
       .innerJoin('i.recipeItems', 'ri')
       .where('ri.recipeId = :id', { id: recipeId })

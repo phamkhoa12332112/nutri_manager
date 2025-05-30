@@ -14,14 +14,8 @@ export class Recipes {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'varchar' })
-  servings: string;
-
   @Column({ type: 'double' })
   totalCalories: number;
-
-  @Column({ type: 'double' })
-  CaloriesPerServing: number;
 
   @Column({ type: 'varchar' })
   imageUrl: string;
