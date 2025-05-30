@@ -201,6 +201,7 @@ export class MealsService {
     //   where: { recipeItems: { recipe: { id: recipeId } } },
     //   relations: ['recipeItems'],
     // });
+    // 2
 
     const queryBuilder = this.ingredientRepository.createQueryBuilder('i');
     if (userId) {
