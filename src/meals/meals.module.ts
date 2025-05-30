@@ -10,6 +10,7 @@ import {
 } from 'src/database/entities';
 import { MealsController } from './meals.controller';
 import { MealsService } from './meals.service';
+import { CustomIngredient } from 'src/database/entities/customIngredient';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MealsService } from './meals.service';
       RecipeItems,
       Ingredient,
       DetailMeals,
+      CustomIngredient,
     ]),
   ],
   controllers: [MealsController],

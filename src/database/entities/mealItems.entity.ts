@@ -17,7 +17,7 @@ export class MealItem {
   @Column({ type: 'integer' })
   quantity: number;
 
-  @ManyToOne(() => Meal, (meal) => meal.items)
+  @ManyToOne(() => Meal, (meal) => meal.items, { onDelete: 'CASCADE' })
   meal: Meal;
 
   @ManyToOne(() => Recipes, (recipe) => recipe.mealItems)

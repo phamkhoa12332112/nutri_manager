@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { MoodRecommendItems } from './moodRecommendItems.entity';
 
 @Entity('moods')
@@ -15,7 +15,7 @@ export class Moods {
   @Column({ type: 'timestamp' })
   recordedAt: Date;
 
-  @ManyToOne(
+  @OneToMany(
     () => MoodRecommendItems,
     (moodRecommendItem) => moodRecommendItem.mood,
   )

@@ -10,9 +10,11 @@ export class DetailMeals {
   @Column({ type: 'datetime' })
   mealTime: Date;
 
-  @ManyToOne(() => User, (user) => user.meals)
+  @ManyToOne(() => User, (user) => user.meals, { onDelete: 'CASCADE' })
   user: User;
 
-  @ManyToOne(() => MealItem, (mealItem) => mealItem.detailMeals)
+  @ManyToOne(() => MealItem, (mealItem) => mealItem.detailMeals, {
+    onDelete: 'CASCADE',
+  })
   mealItem: MealItem;
 }

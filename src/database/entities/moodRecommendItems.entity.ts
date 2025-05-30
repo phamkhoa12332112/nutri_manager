@@ -8,7 +8,9 @@ export class MoodRecommendItems {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Moods, (mood) => mood.moodRecommendItems)
+  @ManyToOne(() => Moods, (mood) => mood.moodRecommendItems, {
+    onDelete: 'CASCADE',
+  })
   mood: Moods;
 
   @ManyToOne(() => Recipes, (recipe) => recipe.moodRecommendItems)

@@ -24,6 +24,6 @@ export class DailyIntake {
   @Column({ type: 'double' })
   totalFiber: number;
 
-  @ManyToOne(() => User, (user) => user.dailyIntakes)
+  @ManyToOne(() => User, (user) => user.dailyIntakes, { onDelete: 'CASCADE' })
   user: User;
 }

@@ -13,6 +13,7 @@ import {
   Moods,
   DetailMeals,
 } from 'src/database/entities';
+import { CustomIngredient } from './entities/customIngredient';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -35,6 +36,7 @@ import {
         MoodRecommendItems,
         Moods,
         DetailMeals,
+        CustomIngredient,
       ],
       synchronize: true,
     }),
