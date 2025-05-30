@@ -1,12 +1,27 @@
+import { AdminService } from './admin.service';
 import { CreateUserDto } from './dto/req/CreateUser.dto';
+import { DeleteUsersDto } from './dto/req/DeleteUsers.dto';
 import { LoginUserDto } from './dto/req/LoginUserDto.dto';
 import { UpdateUserDto } from './dto/req/UpdateUserDto.dto';
+import { UpdateUserForAdminDto } from './dto/req/UpdateUserForAdminDto';
 import { UsersService } from './users.service';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private adminService: AdminService,
+  ) {}
 
   @Post('/register')
   create(@Body() newUser: CreateUserDto) {
@@ -28,8 +43,23 @@ export class UsersController {
     return this.usersService.getUser(userId);
   }
 
+  // ADMIN ONLY
+
+  @Patch('/admin/:userId')
+  updateAdmin(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() updateUser: UpdateUserForAdminDto,
+  ) {
+    return this.adminService.update(updateUser, userId);
+  }
+
+  @Delete('/admin')
+  delete(@Body() users: DeleteUsersDto) {
+    return this.adminService.delete(users);
+  }
+
   @Get('/all')
   getAll() {
-    return this.usersService.getAll();
+    return this.adminService.getAll();
   }
 }

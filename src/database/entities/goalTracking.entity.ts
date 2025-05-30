@@ -18,6 +18,6 @@ export class GoalTracking {
   @Column({ type: 'varchar' })
   goalStatus: string;
 
-  @ManyToOne(() => User, (user) => user.goalTrackings)
+  @ManyToOne(() => User, (user) => user.goalTrackings, { onDelete: 'CASCADE' })
   user: User;
 }
