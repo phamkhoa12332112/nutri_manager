@@ -6,9 +6,6 @@ export class CustomIngredient {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar' })
-  name: string;
-
   @Column({ type: 'double', nullable: true })
   calories: number;
 
@@ -24,8 +21,8 @@ export class CustomIngredient {
   @Column({ type: 'double', nullable: true })
   fiber: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  unit: string;
+  @Column({ type: 'double', nullable: true })
+  quantity: number;
 
   @Column({ type: 'integer' })
   userId: number;
