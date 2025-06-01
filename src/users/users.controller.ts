@@ -58,6 +58,11 @@ export class UsersController {
     return this.adminService.delete(users);
   }
 
+  @Get('details/:userId')
+  getDetailsById(@Param('userId', ParseIntPipe) userId: number) {
+    return this.adminService.getDetailsById(userId);
+  }
+
   @Get('/all')
   getAll() {
     return this.adminService.getAll();
