@@ -26,6 +26,11 @@ export class AdminService {
     return { msg: 'Delete successfully!', stateCode: 200, data: rs };
   }
 
+  async getDetailsById(userId: number) {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    return { msg: 'Get user successfully', stateCode: 200, data: user };
+  }
+
   async getAll() {
     const users = await this.userRepository.find();
     return { msg: 'Get all users successfully', stateCode: 200, data: users };

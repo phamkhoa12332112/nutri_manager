@@ -20,6 +20,11 @@ export class MoodsService {
     return { statusCode: 200, data: moods, msg: 'get moods successfully' };
   }
 
+  async getDetailsById(moodId: number) {
+    const mood = await this.moodsRepository.findOneBy({ id: moodId });
+    return { statusCode: 200, data: mood, msg: 'get mood successfully' };
+  }
+
   async getRecipesByMoodId(moodId: number, limit: number) {
     const recipes = await this.recipeRepository.find({
       where: { moodRecommendItems: { mood: { id: moodId } } },

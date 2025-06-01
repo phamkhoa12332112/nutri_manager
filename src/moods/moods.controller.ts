@@ -18,6 +18,11 @@ import { DeleteMoodsDto } from './req/DeleteMoods.dto';
 export class MoodsController {
   constructor(private readonly moodsService: MoodsService) {}
 
+  @Get('/details/:moodId')
+  getDetailsById(@Param('moodId', ParseIntPipe) moodId: number) {
+    return this.moodsService.getDetailsById(moodId);
+  }
+
   @Get('/:moodId')
   getRecipesByMoodId(
     @Param('moodId', ParseIntPipe) moodId: number,
@@ -25,8 +30,6 @@ export class MoodsController {
   ) {
     return this.moodsService.getRecipesByMoodId(moodId, limit);
   }
-
-  // ADMIN ONLY
 
   @Post()
   createNewMood(@Body() newMood: CreateMoodDto) {

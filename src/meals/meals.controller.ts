@@ -93,6 +93,11 @@ export class MealsController {
     return this.mealsService.deleteMeals(meals);
   }
 
+  @Get('/details/:mealId')
+  getMealById(@Param('mealId', ParseIntPipe) mealId: number) {
+    return this.mealsService.getById(mealId);
+  }
+
   @Get()
   getMeals(@Query('limit') limit: number = 10) {
     return this.mealsService.getMeals(limit);

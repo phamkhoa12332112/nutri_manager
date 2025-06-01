@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal } from 'typeorm';
 import {
   DetailMeals,
   Ingredient,
@@ -48,13 +47,16 @@ export class MealsService {
         data: null,
       };
     }
-    const isExist = await this.detailMealRepository.findOne({
-      where: {
-        user: { id: userId },
-        mealItem: { id: mealItem.id },
-        mealTime: Equal(detail.mealTime),
-      },
-    });
+    const isExist = await this.detailMealRepository
+      .createQueryBuilder('dm')
+      .innerJoin('dm.user', 'u')
+      .innerJoin('dm.mealItem', 'mi')
+      .where('u.id = :userId', { userId: userId })
+      .andWhere('mi.id = :mealItemId', { mealItemId: mealItem.id })
+      .andWhere('CAST(dm.mealTime as Date) = CAST(:date as Date)', {
+        date: detail.mealTime,
+      })
+      .getOne();
     if (isExist) {
       return {
         msg: 'User already has this meal',
@@ -165,15 +167,8 @@ export class MealsService {
       .andWhere('CAST(dm.mealTime as Date) = CAST(:date as Date)', {
         date: query.date,
       })
+      .take(query.limit)
       .getMany();
-    // const details = await this.detailMealRepository.find({
-    //   where: {
-    //     user: { id: userId },
-    //     mealTime: Equal(new Date(query.date)),
-    //   },
-    //   relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
-    //   take: query.limit,
-    // });
     return {
       msg: 'Get user meals successfully',
       stateCode: 200,
@@ -280,6 +275,11 @@ export class MealsService {
         ingredients: finalIngredient,
       },
     };
+  }
+
+  async getById(mealId: number) {
+    const meal = await this.mealRepository.findOneBy({ id: mealId });
+    return { msg: 'Get meal successfully', stateCode: 200, data: meal };
   }
 
   async getIngredients() {
