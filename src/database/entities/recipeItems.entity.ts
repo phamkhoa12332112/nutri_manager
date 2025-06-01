@@ -13,6 +13,8 @@ export class RecipeItems {
   @ManyToOne(() => Recipes, (recipe) => recipe.items)
   recipe: Recipes;
 
-  @ManyToOne(() => Ingredient, (ingredient) => ingredient.recipeItems)
+  @ManyToOne(() => Ingredient, (ingredient) => ingredient.recipeItems, {
+    onDelete: 'CASCADE',
+  })
   ingredient: Ingredient;
 }
