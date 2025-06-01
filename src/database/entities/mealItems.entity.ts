@@ -20,7 +20,10 @@ export class MealItem {
   @ManyToOne(() => Meal, (meal) => meal.items, { onDelete: 'CASCADE' })
   meal: Meal;
 
-  @ManyToOne(() => Recipes, (recipe) => recipe.mealItems)
+  @ManyToOne(() => Recipes, (recipe) => recipe.mealItems, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   recipe: Recipes;
 
   @OneToMany(() => DetailMeals, (detail) => detail.mealItem)
