@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MoreThanOrEqual } from 'typeorm';
 import {
   DetailMeals,
   Ingredient,
@@ -16,6 +17,7 @@ import { UpdateUserIngredientDto } from './dto/req/updateUserIngredient.dto';
 import { CustomIngredient } from 'src/database/entities/customIngredient';
 import { plainToInstance } from 'class-transformer';
 import { IngredientMapper } from './dto/mapper/ingredient.mapper';
+import { DetailsQuery } from './dto/query/details.query';
 
 @Injectable()
 export class MealsService {
@@ -148,11 +150,14 @@ export class MealsService {
     return { msg: 'Delete successfully!', stateCode: 200, data: rs };
   }
 
-  async getUserMeals(userId: number, limit: number) {
+  async getUserMeals(userId: number, query: DetailsQuery) {
     const details = await this.detailMealRepository.find({
-      where: { user: { id: userId } },
+      where: {
+        user: { id: userId },
+        mealTime: MoreThanOrEqual(new Date(query.date)),
+      },
       relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
-      take: limit,
+      take: query.limit,
     });
     return {
       msg: 'Get user meals successfully',

@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MealsService } from './meals.service';
 import { CreateUserMealDto } from './dto/req/createUserMeal.dto';
@@ -15,6 +16,7 @@ import { CreateMealDto } from './dto/req/createMeal.dto';
 import { UpdateMealDto } from './dto/req/updateMeal.dto';
 import { DeleteMealsDto } from './dto/req/deleteMeals.dto';
 import { UpdateUserIngredientDto } from './dto/req/updateUserIngredient.dto';
+import { DetailsQuery } from './dto/query/details.query';
 
 @Controller('meals')
 export class MealsController {
@@ -47,9 +49,14 @@ export class MealsController {
   @Get('/user/details/:userId')
   getUserMeals(
     @Param('userId', ParseIntPipe) userId: number,
-    @Query('limit') limit: number = 10,
+    @Query(
+      new ValidationPipe({
+        transform: true,
+      }),
+    )
+    query: DetailsQuery,
   ) {
-    return this.mealsService.getUserMeals(userId, limit);
+    return this.mealsService.getUserMeals(userId, query);
   }
 
   @Get('/details/:mealId/:recipeId')
