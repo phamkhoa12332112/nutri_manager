@@ -155,14 +155,25 @@ export class MealsService {
   }
 
   async getUserMeals(userId: number, query: DetailsQuery) {
-    const details = await this.detailMealRepository.find({
-      where: {
-        user: { id: userId },
-        mealTime: Equal(new Date(query.date)),
-      },
-      relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
-      take: query.limit,
-    });
+    const details = await this.detailMealRepository
+      .createQueryBuilder('dm')
+      .innerJoin('dm.user', 'u')
+      .leftJoinAndSelect('dm.mealItem', 'mi')
+      .leftJoinAndSelect('mi.recipe', 'r')
+      .leftJoinAndSelect('mi.meal', 'm')
+      .where('u.id = :userId', { userId: userId })
+      .andWhere('CAST(dm.mealTime as Date) = CAST(:date as Date)', {
+        date: query.date,
+      })
+      .getMany();
+    // const details = await this.detailMealRepository.find({
+    //   where: {
+    //     user: { id: userId },
+    //     mealTime: Equal(new Date(query.date)),
+    //   },
+    //   relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
+    //   take: query.limit,
+    // });
     return {
       msg: 'Get user meals successfully',
       stateCode: 200,
