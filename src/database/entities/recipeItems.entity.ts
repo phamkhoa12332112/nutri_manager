@@ -10,9 +10,14 @@ export class RecipeItems {
   @Column({ type: 'integer' })
   quantity: number;
 
-  @ManyToOne(() => Recipes, (recipe) => recipe.items)
+  @ManyToOne(() => Recipes, (recipe) => recipe.items, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   recipe: Recipes;
 
-  @ManyToOne(() => Ingredient, (ingredient) => ingredient.recipeItems)
+  @ManyToOne(() => Ingredient, (ingredient) => ingredient.recipeItems, {
+    onDelete: 'CASCADE',
+  })
   ingredient: Ingredient;
 }

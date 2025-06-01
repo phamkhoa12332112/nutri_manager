@@ -20,10 +20,14 @@ export class Recipes {
   @Column({ type: 'varchar' })
   imageUrl: string;
 
-  @OneToMany(() => RecipeItems, (recipeItems) => recipeItems.recipe)
+  @OneToMany(() => RecipeItems, (recipeItems) => recipeItems.recipe, {
+    cascade: ['insert', 'update'],
+  })
   items: RecipeItems[];
 
-  @OneToMany(() => MealItem, (mealItems) => mealItems.recipe)
+  @OneToMany(() => MealItem, (mealItems) => mealItems.recipe, {
+    cascade: ['insert', 'update'],
+  })
   mealItems: MealItem[];
 
   @OneToMany(

@@ -9,6 +9,7 @@ import { RecipeModule } from './recipes/recipe.module';
 import { MoodsModule } from './moods/moods.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ConfigModule } from '@nestjs/config';
+import { IngredientsModule } from './ingredients/ingredients.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -22,6 +23,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: './.env',
       isGlobal: true,
     }),
+    IngredientsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
