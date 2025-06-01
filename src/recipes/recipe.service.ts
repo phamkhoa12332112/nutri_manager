@@ -143,7 +143,10 @@ export class RecipeService {
   }
 
   async getById(id: number) {
-    const recipe = await this.recipeRepository.findOne({ where: { id } });
+    const recipe = await this.recipeRepository.findOne({
+      where: { id },
+      relations: ['items', 'items.ingredient', 'mealItems', 'mealItems.meal'],
+    });
     return { msg: 'Get recipe successfully', stateCode: 200, data: recipe };
   }
 
