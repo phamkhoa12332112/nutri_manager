@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThanOrEqual } from 'typeorm';
+import { Equal } from 'typeorm';
 import {
   DetailMeals,
   Ingredient,
@@ -36,7 +36,10 @@ export class MealsService {
 
   async createUserMeal(userId: number, detail: CreateUserMealDto) {
     const mealItem = await this.mealItemRepository.findOne({
-      where: { meal: { id: detail.mealId }, recipe: { id: detail.recipeId } },
+      where: {
+        meal: { id: detail.mealId },
+        recipe: { id: detail.recipeId },
+      },
     });
     if (!mealItem) {
       return {
@@ -49,6 +52,7 @@ export class MealsService {
       where: {
         user: { id: userId },
         mealItem: { id: mealItem.id },
+        mealTime: Equal(detail.mealTime),
       },
     });
     if (isExist) {
@@ -59,7 +63,7 @@ export class MealsService {
       };
     }
     const newDetailMeal = this.detailMealRepository.create({
-      mealTime: new Date(),
+      mealTime: detail.mealTime,
       user: { id: userId },
       mealItem: { id: mealItem.id },
     });
@@ -154,7 +158,7 @@ export class MealsService {
     const details = await this.detailMealRepository.find({
       where: {
         user: { id: userId },
-        mealTime: MoreThanOrEqual(new Date(query.date)),
+        mealTime: Equal(new Date(query.date)),
       },
       relations: ['mealItem', 'mealItem.recipe', 'mealItem.meal'],
       take: query.limit,
