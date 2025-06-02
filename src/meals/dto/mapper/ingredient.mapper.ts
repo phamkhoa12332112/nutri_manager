@@ -17,9 +17,6 @@ export class IngredientMapper {
   calories: number;
 
   @Expose()
-  category: string;
-
-  @Expose()
   protein: number;
 
   @Expose()

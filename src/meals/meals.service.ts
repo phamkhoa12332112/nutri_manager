@@ -235,7 +235,6 @@ export class MealsService {
       .select(
         `i.id,
         i.name,
-        i.category,
         i.imageUrl,
         i.unit,
         COALESCE(${userId ? 'tci.calories' : 'NULL'}, i.calories) as calories,

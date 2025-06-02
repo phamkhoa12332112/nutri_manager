@@ -13,9 +13,6 @@ export class Ingredient {
   @Column({ type: 'double' })
   calories: number;
 
-  @Column({ type: 'varchar' })
-  category: string;
-
   @Column({ type: 'double' })
   protein: number;
 
