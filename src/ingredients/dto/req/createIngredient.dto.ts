@@ -17,11 +17,6 @@ export class CreateIngredientDto {
   @IsNumber()
   calories: number;
 
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  category: string;
-
   @IsOptional()
   @IsNumber()
   protein?: number;
