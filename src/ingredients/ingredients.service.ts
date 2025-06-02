@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ingredient } from 'src/database/entities';
-import { Repository } from 'typeorm';
+import { Repository, Not, Equal } from 'typeorm';
 import { CreateIngredientDto } from './dto/req/createIngredient.dto';
 import { UpdateIngredientDto } from './dto/req/updateIngredient.dto';
 import { DeleteIngredientsDto } from './dto/req/deleteIngredients.dto';
@@ -33,6 +33,7 @@ export class IngredientsService {
     if (update.name) {
       const isNameExisting = await this.ingredientRepository.findOneBy({
         name: update.name,
+        id: Not(Equal(id)),
       });
       if (isNameExisting) {
         throw new BadRequestException('Ingredient name already exist');
