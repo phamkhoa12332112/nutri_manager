@@ -67,7 +67,7 @@ export class RecipeService {
 
     return {
       msg: 'Create recipe successfully',
-      stateCode: 200,
+      statusCode: 200,
       data: { recipe },
     };
   }
