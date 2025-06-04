@@ -47,23 +47,6 @@ export class MealsService {
         data: null,
       };
     }
-    const isExist = await this.detailMealRepository
-      .createQueryBuilder('dm')
-      .innerJoin('dm.user', 'u')
-      .innerJoin('dm.mealItem', 'mi')
-      .where('u.id = :userId', { userId: userId })
-      .andWhere('mi.id = :mealItemId', { mealItemId: mealItem.id })
-      .andWhere('CAST(dm.mealTime as Date) = CAST(:date as Date)', {
-        date: detail.mealTime,
-      })
-      .getOne();
-    if (isExist) {
-      return {
-        msg: 'User already has this meal',
-        stateCode: 400,
-        data: null,
-      };
-    }
     const newDetailMeal = this.detailMealRepository.create({
       mealTime: detail.mealTime,
       user: { id: userId },

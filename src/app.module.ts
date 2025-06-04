@@ -10,6 +10,8 @@ import { MoodsModule } from './moods/moods.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ConfigModule } from '@nestjs/config';
 import { IngredientsModule } from './ingredients/ingredients.module';
+import { CronJobModule } from './cron-job/cron-job.module';
+import { ScheduleModule } from '@nestjs/schedule';
 @Module({
   imports: [
     DatabaseModule,
@@ -19,11 +21,13 @@ import { IngredientsModule } from './ingredients/ingredients.module';
     RecipeModule,
     MoodsModule,
     CloudinaryModule,
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: './.env',
       isGlobal: true,
     }),
     IngredientsModule,
+    CronJobModule,
   ],
   controllers: [AppController],
   providers: [AppService],
