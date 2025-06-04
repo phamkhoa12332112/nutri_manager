@@ -1,32 +1,14 @@
-import { PartialType } from '@nestjs/swagger';
+import { OmitType, PartialType } from '@nestjs/swagger';
 import { CreateRecipeDto } from './createRecipe.dto';
-import {
-  ArrayMinSize,
-  IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
-import { Type } from 'class-transformer';
+import { ArrayMinSize, IsArray, IsOptional } from 'class-validator';
 
-class IngredientItem {
-  @IsOptional()
-  @IsNumber()
-  quantity: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  id: number;
-}
-
-export class UpdateRecipeDto extends PartialType(CreateRecipeDto) {
+export class UpdateRecipeDto extends PartialType(
+  OmitType(CreateRecipeDto, ['meals', 'ingredients']),
+) {
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => IngredientItem)
-  ingredients: IngredientItem[];
+  ingredientIds: number[];
 
   @IsOptional()
   @IsArray()

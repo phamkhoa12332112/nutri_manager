@@ -80,55 +80,31 @@ export class RecipeService {
     if (!recipe) {
       throw new BadRequestException(`Recipe with id ${id} not found!`);
     }
-    if (update.ingredients) {
-      const IngredientNeedCreate = update.ingredients.filter((ingredient) => {
+    if (update.ingredientIds && update.ingredientIds.length > 0) {
+      const recipeItemCreates = update.ingredientIds.filter((ingredientId) => {
         return (
-          recipe.items.findIndex((i) => i.ingredient.id === ingredient.id) ===
-          -1
+          recipe.items.findIndex((i) => i.ingredient.id === ingredientId) === -1
         );
       });
-      const ingredientNeedUpdates = update.ingredients.filter((ingredient) => {
-        return ingredient.quantity;
+      const recipeItemDeletes = recipe.items.filter((item) => {
+        return !update.ingredientIds.includes(item.ingredient.id);
       });
-      const ingredientNeedUpdateIds = ingredientNeedUpdates.map((i) => i.id);
-      const ingredientNeedDeletes = update.ingredients.filter((ingredient) => {
-        return !ingredient.quantity;
-      });
-      const ingredientNeedDeleteIds = ingredientNeedDeletes.map((i) => i.id);
-
-      // Create
-
       recipe.items = [
         ...recipe.items,
-        ...IngredientNeedCreate.map((ingredient) => {
+        ...recipeItemCreates.map((ingredientId) => {
           return this.recipeItemsRepository.create({
-            quantity: ingredient.quantity || 1,
-            ingredient: { id: ingredient.id },
+            quantity: 1,
+            ingredient: { id: ingredientId },
             recipe: { id: recipe.id },
           });
         }),
       ];
-
-      // Update
-
-      recipe.items = recipe.items.map((item) => {
-        const indexOfItem = ingredientNeedUpdateIds.findIndex(
-          (i) => i === item.ingredient.id,
-        );
-        if (indexOfItem !== -1) {
-          item.quantity = ingredientNeedUpdates[indexOfItem].quantity;
-        }
-        return item;
-      });
-
-      // Delete
-
       recipe.items = recipe.items.filter((item) => {
-        return !ingredientNeedDeleteIds.includes(item.ingredient.id);
+        return !recipeItemDeletes.includes(item);
       });
     }
 
-    if (update.mealIds) {
+    if (update.mealIds && update.mealIds.length > 0) {
       const mealItemCreates = update.mealIds.filter((mealId) => {
         return recipe.mealItems.findIndex((i) => i.meal.id === mealId) === -1;
       });
