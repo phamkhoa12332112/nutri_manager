@@ -105,7 +105,11 @@ export class RecipeService {
           const index = recipe.items.findIndex(
             (item) => item.ingredient.id === i.id,
           );
-          if (index !== -1 && !acc.includes(i)) {
+          if (acc.includes(i)) {
+            acc[index].quantity += i.quantity;
+            return acc;
+          }
+          if (index !== -1) {
             acc.push(i);
           }
           return acc;
