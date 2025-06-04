@@ -135,6 +135,8 @@ export class RecipeService {
     };
   }
 
+  //
+
   async delete({ ids }: DeleteRecipesDto) {
     const rs = await this.recipeRepository.delete(ids);
     return { msg: 'Delete successfully!', stateCode: 200, data: rs };
