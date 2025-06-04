@@ -102,13 +102,13 @@ export class RecipeService {
       // Update
       const ingredientUpdates = update.ingredients.reduce(
         (acc, i) => {
+          if (acc.includes(i)) {
+            acc.find((ac) => ac.id === i.id)!.quantity += i.quantity;
+            return acc;
+          }
           const index = recipe.items.findIndex(
             (item) => item.ingredient.id === i.id,
           );
-          if (acc.includes(i)) {
-            acc.find((i) => i.id === i.id)!.quantity += i.quantity;
-            return acc;
-          }
           if (index !== -1) {
             acc.push(i);
           }
