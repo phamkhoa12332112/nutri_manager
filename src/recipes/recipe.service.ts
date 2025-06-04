@@ -128,54 +128,26 @@ export class RecipeService {
       });
     }
 
-    if (update.meals) {
-      const mealNeedCreate = update.meals.filter((meal) => {
-        return recipe.mealItems.findIndex((i) => i.id === meal.id) === -1;
+    if (update.mealIds) {
+      const mealItemCreates = update.mealIds.filter((mealId) => {
+        return recipe.mealItems.findIndex((i) => i.meal.id === mealId) === -1;
       });
-      const mealNeedUpdates = update.meals.filter((meal) => {
-        return (
-          meal.quantity &&
-          recipe.mealItems.findIndex((i) => i.id === meal.id) !== -1
-        );
+      const mealItemDeletes = recipe.mealItems.filter((item) => {
+        return !update.mealIds.includes(item.meal.id);
       });
-      const mealNeedUpdateIds = mealNeedUpdates.map((i) => i.id);
-      const mealNeedDeletes = update.meals.filter((meal) => {
-        return (
-          !meal.quantity &&
-          recipe.items.findIndex((i) => i.id === meal.id) !== -1
-        );
-      });
-      const mealNeedDeleteIds = mealNeedDeletes.map((i) => i.id);
-
-      // Create
 
       recipe.mealItems = [
         ...recipe.mealItems,
-        ...mealNeedCreate.map((meal) => {
+        ...mealItemCreates.map((mealId) => {
           return this.mealItemRepository.create({
-            meal: { id: meal.id },
-            quantity: meal.quantity || 1,
+            quantity: 1,
+            meal: { id: mealId },
             recipe: { id: recipe.id },
           });
         }),
       ];
-
-      // Update
-
-      recipe.mealItems = recipe.mealItems.map((item) => {
-        const indexOfItem = mealNeedUpdateIds.findIndex(
-          (i) => i === item.meal.id,
-        );
-        if (indexOfItem !== -1) {
-          item.quantity = mealNeedUpdates[indexOfItem].quantity;
-        }
-        return item;
-      });
-
-      // Delete
-
       recipe.mealItems = recipe.mealItems.filter((item) => {
-        return !mealNeedDeleteIds.includes(item.meal.id);
+        return !mealItemDeletes.includes(item);
       });
     }
     const finalRecipe = { ...recipe, ...update };
