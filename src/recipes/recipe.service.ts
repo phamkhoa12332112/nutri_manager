@@ -80,34 +80,80 @@ export class RecipeService {
     if (!recipe) {
       throw new BadRequestException(`Recipe with id ${id} not found!`);
     }
-    if (update.ingredientIds && update.ingredientIds.length > 0) {
-      const recipeItemCreates = update.ingredientIds.filter((ingredientId) => {
+    if (update.ingredients && update.ingredients.length > 0) {
+      const ingredientCreates = update.ingredients.reduce(
+        (acc, ingredient) => {
+          const index = acc.findIndex((i) => i.id === ingredient.id);
+          if (index !== -1) {
+            acc[index].quantity += ingredient.quantity;
+            return acc;
+          }
+          if (
+            recipe.items.findIndex((i) => i.ingredient.id === ingredient.id) ===
+            -1
+          ) {
+            acc.push(ingredient);
+          }
+          return acc;
+        },
+        [] as { id: number; quantity: number }[],
+      );
+
+      // Update
+      const ingredientUpdates = update.ingredients.reduce(
+        (acc, i) => {
+          const index = recipe.items.findIndex(
+            (item) => item.ingredient.id === i.id,
+          );
+          if (index !== -1 && !acc.includes(i)) {
+            acc.push(i);
+          }
+          return acc;
+        },
+        [] as { id: number; quantity: number }[],
+      );
+
+      // Delete
+
+      recipe.items = recipe.items.filter((item) => {
         return (
-          recipe.items.findIndex((i) => i.ingredient.id === ingredientId) === -1
+          update.ingredients.findIndex((i) => i.id === item.ingredient.id) ===
+          -1
         );
       });
-      const recipeItemDeletes = recipe.items.filter((item) => {
-        return !update.ingredientIds.includes(item.ingredient.id);
-      });
+
       recipe.items = [
         ...recipe.items,
-        ...recipeItemCreates.map((ingredientId) => {
+        ...ingredientCreates.map((ingredient) => {
           return this.recipeItemsRepository.create({
-            quantity: 1,
-            ingredient: { id: ingredientId },
+            quantity: ingredient.quantity,
+            ingredient: { id: ingredient.id },
             recipe: { id: recipe.id },
           });
         }),
       ];
-      recipe.items = recipe.items.filter((item) => {
-        return !recipeItemDeletes.includes(item);
+
+      recipe.items = recipe.items.map((item) => {
+        const index = ingredientUpdates.findIndex(
+          (i) => i.id === item.ingredient.id,
+        );
+        if (index !== -1) {
+          item.quantity = ingredientUpdates[index].quantity;
+        }
+        return item;
       });
     }
 
     if (update.mealIds && update.mealIds.length > 0) {
-      const mealItemCreates = update.mealIds.filter((mealId) => {
-        return recipe.mealItems.findIndex((i) => i.meal.id === mealId) === -1;
-      });
+      const mealItemCreates = update.mealIds.reduce((acc, mealId) => {
+        if (
+          recipe.mealItems.findIndex((i) => i.meal.id === mealId) === -1 &&
+          !acc.includes(mealId)
+        ) {
+          acc.push(mealId);
+        }
+        return acc;
+      }, [] as number[]);
       const mealItemDeletes = recipe.mealItems.filter((item) => {
         return !update.mealIds.includes(item.meal.id);
       });
