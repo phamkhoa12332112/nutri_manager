@@ -13,6 +13,7 @@ import { MoodsService } from './moods.service';
 import { CreateMoodDto } from './req/CreateMood.dto';
 import { UpdateMoodDto } from './req/UpdateMood.dto';
 import { DeleteMoodsDto } from './req/DeleteMoods.dto';
+import { UpdateRecipeToMoodDto } from './req/UpdateRecipeToMood.dto';
 
 @Controller('/moods')
 export class MoodsController {
@@ -34,6 +35,14 @@ export class MoodsController {
   @Post()
   createNewMood(@Body() newMood: CreateMoodDto) {
     return this.moodsService.create(newMood);
+  }
+
+  @Patch('/recipe/:recipeId')
+  updateRecipeToMood(
+    @Param('recipeId', ParseIntPipe) recipeId: number,
+    @Body() data: UpdateRecipeToMoodDto,
+  ) {
+    return this.moodsService.updateRecipeToMood(data, recipeId);
   }
 
   @Patch('/:moodId')
