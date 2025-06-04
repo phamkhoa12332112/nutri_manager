@@ -142,7 +142,7 @@ export class RecipeService {
       const mealNeedDeletes = update.meals.filter((meal) => {
         return (
           !meal.quantity &&
-          recipe.items.findIndex((i) => i.ingredient.id === meal.id) !== -1
+          recipe.items.findIndex((i) => i.id === meal.id) !== -1
         );
       });
       const mealNeedDeleteIds = mealNeedDeletes.map((i) => i.id);
