@@ -20,16 +20,6 @@ class IngredientItem {
   id: number;
 }
 
-class MealItem {
-  @IsOptional()
-  @IsNumber()
-  quantity: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  id: number;
-}
-
 export class UpdateRecipeDto extends PartialType(CreateRecipeDto) {
   @IsOptional()
   @IsArray()
@@ -41,7 +31,5 @@ export class UpdateRecipeDto extends PartialType(CreateRecipeDto) {
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => MealItem)
-  meals: MealItem[];
+  mealIds: number[];
 }
