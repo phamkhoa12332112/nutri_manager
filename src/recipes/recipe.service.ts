@@ -117,7 +117,7 @@ export class RecipeService {
 
       recipe.items = recipe.items.filter((item) => {
         return (
-          update.ingredients.findIndex((i) => i.id === item.ingredient.id) ===
+          update.ingredients.findIndex((i) => i.id === item.ingredient.id) !==
           -1
         );
       });
