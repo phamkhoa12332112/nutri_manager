@@ -81,6 +81,12 @@ export class RecipeService {
       throw new BadRequestException(`Recipe with id ${id} not found!`);
     }
     if (update.ingredients) {
+      const IngredientNeedCreate = update.ingredients.filter((ingredient) => {
+        return (
+          recipe.items.findIndex((i) => i.ingredient.id === ingredient.id) ===
+          -1
+        );
+      });
       const ingredientNeedUpdates = update.ingredients.filter((ingredient) => {
         return ingredient.quantity;
       });
@@ -89,6 +95,22 @@ export class RecipeService {
         return !ingredient.quantity;
       });
       const ingredientNeedDeleteIds = ingredientNeedDeletes.map((i) => i.id);
+
+      // Create
+
+      recipe.items = [
+        ...recipe.items,
+        ...IngredientNeedCreate.map((ingredient) => {
+          return this.recipeItemsRepository.create({
+            quantity: ingredient.quantity || 1,
+            ingredient: { id: ingredient.id },
+            recipe: { id: recipe.id },
+          });
+        }),
+      ];
+
+      // Update
+
       recipe.items = recipe.items.map((item) => {
         const indexOfItem = ingredientNeedUpdateIds.findIndex(
           (i) => i === item.ingredient.id,
@@ -99,20 +121,46 @@ export class RecipeService {
         return item;
       });
 
+      // Delete
+
       recipe.items = recipe.items.filter((item) => {
         return !ingredientNeedDeleteIds.includes(item.ingredient.id);
       });
     }
 
     if (update.meals) {
+      const mealNeedCreate = update.meals.filter((meal) => {
+        return recipe.mealItems.findIndex((i) => i.id === meal.id) === -1;
+      });
       const mealNeedUpdates = update.meals.filter((meal) => {
-        return meal.quantity;
+        return (
+          meal.quantity &&
+          recipe.mealItems.findIndex((i) => i.id === meal.id) !== -1
+        );
       });
       const mealNeedUpdateIds = mealNeedUpdates.map((i) => i.id);
       const mealNeedDeletes = update.meals.filter((meal) => {
-        return !meal.quantity;
+        return (
+          !meal.quantity &&
+          recipe.items.findIndex((i) => i.ingredient.id === meal.id) !== -1
+        );
       });
       const mealNeedDeleteIds = mealNeedDeletes.map((i) => i.id);
+
+      // Create
+
+      recipe.mealItems = [
+        ...recipe.mealItems,
+        ...mealNeedCreate.map((meal) => {
+          return this.mealItemRepository.create({
+            meal: { id: meal.id },
+            quantity: meal.quantity || 1,
+            recipe: { id: recipe.id },
+          });
+        }),
+      ];
+
+      // Update
 
       recipe.mealItems = recipe.mealItems.map((item) => {
         const indexOfItem = mealNeedUpdateIds.findIndex(
@@ -123,6 +171,8 @@ export class RecipeService {
         }
         return item;
       });
+
+      // Delete
 
       recipe.mealItems = recipe.mealItems.filter((item) => {
         return !mealNeedDeleteIds.includes(item.meal.id);
