@@ -106,7 +106,7 @@ export class RecipeService {
             (item) => item.ingredient.id === i.id,
           );
           if (acc.includes(i)) {
-            acc[index].quantity += i.quantity;
+            acc.find((i) => i.id === i.id)!.quantity += i.quantity;
             return acc;
           }
           if (index !== -1) {
