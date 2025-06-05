@@ -79,6 +79,7 @@ export class MoodsService {
       where: { recipe: { id: recipeId } },
       relations: ['mood', 'meal'],
     });
+    console.log('recipeMoods', recipeMoods);
     const recipeMoodCreates = data.update.reduce((acc, item) => {
       const duplicate = acc.find(
         (i) => i.moodId === item.moodId && i.mealId === item.mealId,
@@ -86,15 +87,18 @@ export class MoodsService {
       if (duplicate) {
         return acc;
       }
-      const existRecipe = recipeMoods.find(
-        (i) => i.meal.id !== item.mealId && i.mood.id !== item.moodId,
-      );
+      const existRecipe = recipeMoods.find((i) => {
+        if (i.mood.id === item.moodId && i.meal.id === item.mealId) {
+          return true;
+        }
+        return false;
+      });
       if (!existRecipe) {
         acc.push(item);
       }
       return acc;
     }, [] as MealAndMoodIdDto[]);
-
+    console.log('recipeMoodCreates', recipeMoodCreates);
     const recipeMoodDeletes = recipeMoods.filter((i) => {
       return (
         data.update.findIndex(
