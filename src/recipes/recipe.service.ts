@@ -102,7 +102,7 @@ export class RecipeService {
       // Update
       const ingredientUpdates = update.ingredients.reduce(
         (acc, i) => {
-          if (acc.findIndex((ac) => ac.id === i.id) !== -1) {
+          if (acc.includes(i)) {
             acc.find((ac) => ac.id === i.id)!.quantity += i.quantity;
             return acc;
           }
