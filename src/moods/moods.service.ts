@@ -87,7 +87,7 @@ export class MoodsService {
         return acc;
       }
       const existRecipe = recipeMoods.find(
-        (i) => i.meal.id !== item.mealId || i.mood.id !== item.moodId,
+        (i) => i.meal.id !== item.mealId && i.mood.id !== item.moodId,
       );
       if (!existRecipe) {
         acc.push(item);
