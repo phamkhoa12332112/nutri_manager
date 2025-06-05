@@ -14,14 +14,14 @@ export class UsersService {
     private goalTrackingRepository: Repository<GoalTracking>,
   ) {}
 
-  async getStatistics(from: string, to: string) {
+  async getStatistics(from: string, to: string, userId: number) {
     const goalTrackings = await this.goalTrackingRepository
       .createQueryBuilder('goalTracking')
       .where(
         'CAST(goalTracking.intakeDate as Date) >= CAST(:from as Date) AND CAST(goalTracking.intakeDate as Date) <= CAST(:to as Date)',
         { from, to },
       )
-      .andWhere('goalTracking.userId = :userId', { userId: 1 })
+      .andWhere('goalTracking.userId = :userId', { userId: userId })
       .getMany();
     return {
       msg: 'Get statistics successfully!',

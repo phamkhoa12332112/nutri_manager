@@ -24,9 +24,13 @@ export class UsersController {
     private adminService: AdminService,
   ) {}
 
-  @Get('/statistics')
-  getStatistics(@Query('from') from: string, @Query('to') to: string) {
-    return this.usersService.getStatistics(from, to);
+  @Get('/statistics/:userId')
+  getStatistics(
+    @Query('from') from: string,
+    @Query('to') to: string,
+    @Param('userId') userId: number,
+  ) {
+    return this.usersService.getStatistics(from, to, userId);
   }
 
   @Post('/register')
