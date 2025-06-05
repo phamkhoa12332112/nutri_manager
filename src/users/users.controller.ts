@@ -14,6 +14,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -22,6 +23,11 @@ export class UsersController {
     private usersService: UsersService,
     private adminService: AdminService,
   ) {}
+
+  @Get('/statistics')
+  getStatistics(@Query('from') from: string, @Query('to') to: string) {
+    return this.usersService.getStatistics(from, to);
+  }
 
   @Post('/register')
   create(@Body() newUser: CreateUserDto) {

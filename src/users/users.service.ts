@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/database/entities';
+import { GoalTracking, User } from 'src/database/entities';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/req/CreateUser.dto';
 import { LoginUserDto } from './dto/req/LoginUserDto.dto';
@@ -10,7 +10,24 @@ import { UpdateUserDto } from './dto/req/UpdateUserDto.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(GoalTracking)
+    private goalTrackingRepository: Repository<GoalTracking>,
   ) {}
+
+  async getStatistics(from: string, to: string) {
+    const goalTrackings = await this.goalTrackingRepository
+      .createQueryBuilder('goalTracking')
+      .where(
+        'CAST(goalTracking.intakeDate as Date) >= CAST(:from as Date) AND CAST(goalTracking.intakeDate as Date) <= CAST(:to as Date)',
+        { from, to },
+      )
+      .getMany();
+    return {
+      msg: 'Get statistics successfully!',
+      statusCode: 200,
+      data: goalTrackings,
+    };
+  }
 
   async register(newUser: CreateUserDto) {
     const isUserExist = await this.userRepository.findOne({
