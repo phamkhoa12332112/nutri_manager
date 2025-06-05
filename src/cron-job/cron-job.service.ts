@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -20,7 +20,7 @@ export class CronJobService {
     private detailMealRepository: Repository<DetailMeals>,
   ) {}
 
-  //   @Cron(CronExpression.EVERY_10_SECONDS)
+  // @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   handleCron() {
     return this.handleUpdate();
   }
