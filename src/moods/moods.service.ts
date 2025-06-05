@@ -26,6 +26,14 @@ export class MoodsService {
     private moodRecommendItemsRepository: Repository<MoodRecommendItems>,
   ) {}
 
+  async getMoodByRecipeId(recipeId: number) {
+    const RecipeMoods = await this.moodRecommendItemsRepository.findOne({
+      where: { recipe: { id: recipeId } },
+      relations: ['mood', 'meal'],
+    });
+    return { statusCode: 200, data: RecipeMoods, msg: 'get mood successfully' };
+  }
+
   async getAll() {
     const moods = await this.moodsRepository.find();
     return { statusCode: 200, data: moods, msg: 'get moods successfully' };

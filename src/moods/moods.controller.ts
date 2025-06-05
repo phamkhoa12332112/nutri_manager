@@ -19,6 +19,11 @@ import { UpdateRecipeToMoodDto } from './req/UpdateRecipeToMood.dto';
 export class MoodsController {
   constructor(private readonly moodsService: MoodsService) {}
 
+  @Get('/recipe/:recipeId')
+  getMoodByRecipeId(@Param('recipeId', ParseIntPipe) recipeId: number) {
+    return this.moodsService.getMoodByRecipeId(recipeId);
+  }
+
   @Get('/details/:moodId')
   getDetailsById(@Param('moodId', ParseIntPipe) moodId: number) {
     return this.moodsService.getDetailsById(moodId);
