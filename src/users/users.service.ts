@@ -21,6 +21,7 @@ export class UsersService {
         'CAST(goalTracking.intakeDate as Date) >= CAST(:from as Date) AND CAST(goalTracking.intakeDate as Date) <= CAST(:to as Date)',
         { from, to },
       )
+      .andWhere('goalTracking.userId = :userId', { userId: 1 })
       .getMany();
     return {
       msg: 'Get statistics successfully!',
