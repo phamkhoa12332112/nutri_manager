@@ -27,7 +27,7 @@ export class MoodsService {
   ) {}
 
   async getMoodByRecipeId(recipeId: number) {
-    const RecipeMoods = await this.moodRecommendItemsRepository.findOne({
+    const RecipeMoods = await this.moodRecommendItemsRepository.find({
       where: { recipe: { id: recipeId } },
       relations: ['mood', 'meal'],
     });
