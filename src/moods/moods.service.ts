@@ -86,10 +86,10 @@ export class MoodsService {
       if (duplicate) {
         return acc;
       }
-      const newRecipe = recipeMoods.find(
+      const existRecipe = recipeMoods.find(
         (i) => i.meal.id !== item.mealId || i.mood.id !== item.moodId,
       );
-      if (newRecipe) {
+      if (!existRecipe) {
         acc.push(item);
       }
       return acc;
