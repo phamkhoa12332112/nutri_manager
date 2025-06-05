@@ -108,7 +108,8 @@ export class MoodsService {
       recipeMoodCreates.map((i) => {
         return this.moodRecommendItemsRepository.create({
           recipe: { id: recipeId },
-          ...i,
+          meal: { id: i.mealId },
+          mood: { id: i.moodId },
         });
       }),
     );
