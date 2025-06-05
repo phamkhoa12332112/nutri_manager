@@ -87,8 +87,7 @@ export class MoodsService {
       where: { recipe: { id: recipeId } },
       relations: ['mood', 'meal'],
     });
-    console.log('recipeMoods', recipeMoods);
-    const recipeMoodCreates = data.update.reduce((acc, item) => {
+    const recipeMoodCreates = data.data.reduce((acc, item) => {
       const duplicate = acc.find(
         (i) => i.moodId === item.moodId && i.mealId === item.mealId,
       );
@@ -106,10 +105,9 @@ export class MoodsService {
       }
       return acc;
     }, [] as MealAndMoodIdDto[]);
-    console.log('recipeMoodCreates', recipeMoodCreates);
     const recipeMoodDeletes = recipeMoods.filter((i) => {
       return (
-        data.update.findIndex(
+        data.data.findIndex(
           (u) => u.moodId === i.mood.id && u.mealId === i.meal.id,
         ) === -1
       );

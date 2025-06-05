@@ -22,5 +22,5 @@ export class UpdateRecipeToMoodDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => MealAndMoodIdDto)
-  update: MealAndMoodIdDto[];
+  data: MealAndMoodIdDto[];
 }
